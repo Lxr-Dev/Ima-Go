@@ -6,3 +6,19 @@ body {
 .navbar-brand img {
   width: 50%;
 }
+
+.mt-2 {
+  margin-top: 1.5rem!important;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.btn {
+  border-radius: 10px;
+}
+
+.card-title {
+  margin-top: 0.3rem;
+}
