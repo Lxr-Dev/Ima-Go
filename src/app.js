@@ -49,8 +49,6 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-var cookieParser = require('cookie-parser');
-app.use(cookieParser());
 
 // Global Variables
 app.use((req, res, next) => {
