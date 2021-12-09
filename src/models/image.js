@@ -10,7 +10,7 @@ const imageSchema = new Schema(
     views: { type: Number, default: 0 },
     likes: { type: Number, default: 0 },
     timestamp: { type: Date, default: Date.now },
-    user_email: { type: String, default: "alguien@gmail.com" } //Aquí se almacena el correo del usuario que subió la imagen
+    user_email: { type: String, default: "@gmail.com" } //Aquí se almacena el correo del usuario que subió la imagen
   },
   {
     versionKey: false,

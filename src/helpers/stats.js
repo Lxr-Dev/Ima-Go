@@ -24,6 +24,7 @@ async function imageTotalViewsCounter() {
   return viewsTotal;
 }
 
+// Reemplazar con el código que cuente el total de registros de likes
 async function likesTotalCounter() {
   const result = await Image.aggregate([
     {

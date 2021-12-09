@@ -7,7 +7,7 @@ import { randomNumber } from "../helpers/libs";
 import { Image, Comment } from "../models";
 
 export const index = async (req, res, next) => {
-  let viewModel = { image: {}, comments: [] };
+  let viewModel = { image: {}, comments: [], delButton: 'none' };
 
   const image = await Image.findOne({
     filename: { $regex: req.params.image_id },
@@ -30,62 +30,87 @@ export const index = async (req, res, next) => {
   }).lean();
 
   viewModel.comments = comments;
+  
+  let currentUser = req.user;
+  if (currentUser != null){
+    const imageUser = await Image.findOne({
+      filename: { $regex: req.params.image_id },
+    });
+    if (currentUser.email==imageUser.user_email){
+      viewModel.delButton = 'block';
+    }
+  }
+  
   viewModel = await sidebar(viewModel);
-
+  
   //console.log(viewModel);
   res.render("image", viewModel);
 };
 
 export const create = (req, res) => {
-  const saveImage = async () => {
-    const imgUrl = randomNumber();
-    const images = await Image.find({ filename: imgUrl });
-    if (images.length > 0) {
-      saveImage();
-    } else {
-      // Image Location
-      const imageTempPath = req.file.path;
-      const ext = path.extname(req.file.originalname).toLowerCase();
-      const targetPath = path.resolve(`./uploads/${imgUrl}${ext}`);
 
-      // Validate Extension
-      if (
-        ext === ".png" ||
-        ext === ".jpg" ||
-        ext === ".jpeg" ||
-        ext === ".gif"
-      ) {
-        // you wil need the public/temp path or this will throw an error
-        await fs.rename(imageTempPath, targetPath);
+  let currentUser = req.user;
+  if (currentUser != null){
 
-        // create a new image
-        const newImg = new Image({
-          title: req.body.title,
-          filename: imgUrl + ext,
-          description: req.body.description,
-        });
-
-        // save the image
-        const imageSaved = await newImg.save();
-
-        // redirect to the list of images
-        res.redirect("/images/" + imageSaved.uniqueId);
+    const saveImage = async () => {
+      const imgUrl = randomNumber();
+      const images = await Image.find({ filename: imgUrl });
+      if (images.length > 0) {
+        saveImage();
       } else {
-        await fs.unlink(imageTempPath);
-        res.status(500).json({ error: "Only Images are allowed" });
+        // Image Location
+        const imageTempPath = req.file.path;
+        const ext = path.extname(req.file.originalname).toLowerCase();
+        const targetPath = path.resolve(`./uploads/${imgUrl}${ext}`);
+  
+        // Validate Extension
+        if (
+          ext === ".png" ||
+          ext === ".jpg" ||
+          ext === ".jpeg" ||
+          ext === ".gif"
+        ) {
+          // you wil need the public/temp path or this will throw an error
+          await fs.rename(imageTempPath, targetPath);
+  
+          // create a new image
+          const newImg = new Image({
+            title: req.body.title,
+            filename: imgUrl + ext,
+            description: req.body.description,
+            user_email: currentUser.email,
+          });
+  
+          // save the image
+          const imageSaved = await newImg.save();
+  
+          // redirect to the list of images
+          res.redirect("/images/" + imageSaved.uniqueId);
+        } else {
+          await fs.unlink(imageTempPath);
+          res.status(500).json({ error: "Only Images are allowed" });
+        }
       }
-    }
-  };
+    };
+  
+    saveImage();
+    // }
+  }else{
+    //Redirect to login if the user is not logged in
+    res.redirect("/auth/signin");
+  }
 
-  saveImage();
 };
 
 export const like = async (req, res) => {
   const image = await Image.findOne({
     filename: { $regex: req.params.image_id },
   });
-  console.log('ESTA VIVO');
   if (image) {
+
+    // Luego de verificar que la imágen existe, primero verificar que el usuario no haya dado like a la imágen
+    // Si no le ha dado like entonces crear una nueva instancia de like, que contenga el nombre de la imágen y el usuario que le dio like
+
     image.likes = image.likes + 1;
     await image.save();
     res.json({ likes: image.likes });

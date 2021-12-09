@@ -6,7 +6,7 @@ $(function() {
     $('#post-comment').slideToggle();
   });
   
-  // Like Button Request
+  // Like Button Request, reemplazar según la respuesta del servidor
   $('#btn-like').click(function(e) {
     e.preventDefault();
     let imgId = $(this).data('id');
