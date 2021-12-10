@@ -4,7 +4,7 @@ import md5 from "md5";
 
 import sidebar from "../helpers/sidebar";
 import { randomNumber } from "../helpers/libs";
-import { Image, Comment } from "../models";
+import { Image, Comment, Like } from "../models";
 
 export const index = async (req, res, next) => {
   let viewModel = { image: {}, comments: [], delButton: 'none' };
