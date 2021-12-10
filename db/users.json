@@ -1,0 +1,1 @@
+{"_id":{"$oid":"61b3a271b6eec5a6ccfca1fd"},"email":"kenneth-cruz@outlook.com","password":"$2b$10$gKh0dvoesAASnxiatEu34eAFM6dsvaE3w0H4M566s0cdP0Z8RwuNi","createdAt":{"$date":"2021-12-10T18:54:42.07Z"},"updatedAt":{"$date":"2021-12-10T18:54:42.07Z"}}
