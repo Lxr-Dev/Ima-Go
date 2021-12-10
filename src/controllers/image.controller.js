@@ -103,20 +103,48 @@ export const create = (req, res) => {
 };
 
 export const like = async (req, res) => {
-  const image = await Image.findOne({
-    filename: { $regex: req.params.image_id },
-  });
-  if (image) {
 
-    // Luego de verificar que la imágen existe, primero verificar que el usuario no haya dado like a la imágen
-    // Si no le ha dado like entonces crear una nueva instancia de like, que contenga el nombre de la imágen y el usuario que le dio like
+  let currentUser = req.user;
+  if (currentUser != null){
+    const image = await Image.findOne({
+      filename: { $regex: req.params.image_id },
+    });
+  
+    if (image) {
+  
+      const verify_like = await Like.findOne({
+        filename: image.filename,
+        user_email_likeIt: req.user.email,
+      });
+  
+      if (verify_like){
+        console.log('Usted ya le dió Like a esta imagen');
+      }else{
+        const newLike = new Like({
+          filename: image.filename,
+          user_email_likeIt: req.user.email,
+        });
+    
+        await newLike.save();
+    
+        // Luego de verificar que la imágen existe, primero verificar que el usuario no haya dado like a la imágen
+        // Si no le ha dado like entonces crear una nueva instancia de like, que contenga el nombre de la imágen y el usuario que le dio like
+    
+        image.likes = image.likes + 1;
+        await image.save();
+        res.json({ likes: image.likes });
+      }
+  
+    } else {
+      res.status(500).json({ error: "Internal Error" });
+    }
 
-    image.likes = image.likes + 1;
-    await image.save();
-    res.json({ likes: image.likes });
-  } else {
-    res.status(500).json({ error: "Internal Error" });
+  }else{
+    //res.redirect("/auth/signin");
+    res.status(300).json({ error: "No está logueado"});
   }
+
+ 
 };
 
 export const comment = async (req, res) => {

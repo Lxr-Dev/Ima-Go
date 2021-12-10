@@ -12,6 +12,9 @@ $(function() {
     let imgId = $(this).data('id');
     console.log(imgId)
     $.post('/images/' + imgId + '/like')
+      .fail(data => {
+        window.location.replace("/auth/signin");
+      })
       .done(data => {
       console.log('back:', data)
         $('.likes-count').text(data.likes);
@@ -22,7 +25,7 @@ $(function() {
   $('#btn-delete').click(function (e) {
     e.preventDefault();
     let $this = $(this);
-    const response = confirm('Are you sure you want to delete this image?');
+    const response = confirm('Estas seguro de que deseas eliminar esta imagen?');
     if (response) {
       let imgId = $(this).data('id');
       $.ajax({
