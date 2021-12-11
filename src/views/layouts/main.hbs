@@ -2,6 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
+    
+    {{!-- Manifest --}}
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Ima-Go">
+    <meta name="msapplication-TileImage" content="/public/assets/logo-512.png">
+    <meta name="msapplication-TileColor" content="#272727">
+    <link rel="apple-touch-icon" href="/public/assets/logo-192.png">
+    <link rel="manifest" href="/public/manifest.json">
+    
     {{>head}}
   </head>
   <body>
@@ -38,5 +48,6 @@
     <!-- SCRIPTS -->
     {{>footer}}
     <script src="/public/js/scripts.js"></script>
+    <script src="/public/js/sw.js"></script>
   </body>
 </html>
