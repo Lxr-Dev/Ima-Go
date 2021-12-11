@@ -65,8 +65,14 @@ app.use((req, res, next) => {
 app.use(indexRoutes);
 app.use(authRoutes);
 
+const options = {
+  setHeaders: function (res, path, stat) {
+      res.set('Service-Worker-Allowed', '/');
+  },
+};
+
 // The Public directory for static files
-app.use("/public", express.static(path.join(__dirname, "./public")));
+app.use("/public", express.static(path.join(__dirname, "./public")),options);
 
 // The Uploads directory
 app.use("/uploads", express.static("./uploads"));
