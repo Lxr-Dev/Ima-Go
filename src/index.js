@@ -1,6 +1,6 @@
 import app from "./app";
 import { PORT } from "./config";
-#import { MONGODB_URI } from "./config";
+//import { MONGODB_URI } from "./config";
 
 // database
 import "./config/mongoose";
