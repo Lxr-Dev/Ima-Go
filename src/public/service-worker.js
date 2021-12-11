@@ -38,7 +38,7 @@
 'use strict';
 
 var precacheConfig = [["/public/manifest.json","6915058195a9c59d1e1ecb4738274f10"]];
-var cacheName = 'sw-precache-v3-sw-precache-' + (self.registration ? self.registration.scope : '/');
+var cacheName = 'sw-precache-v3-sw-precache-' + (self.registration ? self.registration.scope : 'https://young-brook-58333.herokuapp.com/');
 
 
 var ignoreUrlParametersMatching = [/^utm_/];
