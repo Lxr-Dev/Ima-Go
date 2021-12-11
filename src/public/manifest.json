@@ -1,0 +1,21 @@
+{
+    "name": "Ima-Go",
+    "short_name": "Ima-Go",
+    "icons": [
+        {
+            "src": "assets/logo-192.png",
+            "sizes": "4501x4500",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/logo-512.png",
+            "sizes": "4500x4500",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#272727",
+    "background_color": "#272727",
+    "display": "standalone",
+    
+    "start_url":"/"
+}
