@@ -37,7 +37,7 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["manifest.json","6915058195a9c59d1e1ecb4738274f10"]];
+var precacheConfig = [["/public/manifest.json","6915058195a9c59d1e1ecb4738274f10"]];
 var cacheName = 'sw-precache-v3-sw-precache-' + (self.registration ? self.registration.scope : '');
 
 
