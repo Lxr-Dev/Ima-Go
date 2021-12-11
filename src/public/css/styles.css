@@ -4,7 +4,7 @@ body {
 }
 
 .navbar-brand img {
-  width: 50%;
+  width: 15%;
 }
 
 .mt-2 {
@@ -21,4 +21,16 @@ body {
 
 .card-title {
   margin-top: 0.3rem;
+}
+
+@media (max-width: 540px) {
+
+.phone {
+  font-size: 0.75rem; 
+}
+
+.phone-btn {
+  padding: 0.7rem;
+}
+
 }
