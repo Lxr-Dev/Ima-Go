@@ -72,6 +72,17 @@ export const create = (req, res) => {
         ) {
           // you wil need the public/temp path or this will throw an error
           await fs.rename(imageTempPath, targetPath);
+
+          const archivo = targetPath;
+
+          const cloudinary = require('cloudinary');
+          cloudinary.config({ 
+            cloud_name: 'dvbpuvfut', 
+            api_key: '412288956342589', 
+            api_secret: 'aTcSbtyBAQPBJXjgBfIaKksG-Pk' 
+          });
+
+          const resultado = await cloudinary.v2.uploader.upload(archivo);
   
           // create a new image
           const newImg = new Image({
@@ -79,6 +90,7 @@ export const create = (req, res) => {
             filename: imgUrl + ext,
             description: req.body.description,
             user_email: currentUser.email,
+            image_url: resultado.secure_url
           });
   
           // save the image
